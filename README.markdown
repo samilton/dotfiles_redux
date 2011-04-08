@@ -1,3 +1,12 @@
+# forked from holman
+
+Because he agrees they are meant to be forked... 
+
+Install instructions below. My only goal is to clean them up to be
+specific to my environment, not to re-invent anything. Well except ^d ==
+'logout', duh.
+
+
 # holman does dotfiles
 
 ## dotfiles
