@@ -1,7 +1,9 @@
-colorscheme molokai
+" colorscheme molokai
+colorscheme railscasts
 set anti
-set lines=999 columns=84
+set lines=999 columns=120
 set guioptions=egmrt
+set relativenumber
 
 " Command + t to :CommandT
 if has("gui_macvim")
