@@ -3,3 +3,14 @@
 .tissues
 *~
 *.swp
+tags
+.svn
+.DS_Store
+tmtags
+log
+*.swp
+*.un~
+id_rsa.pragma
+.bundle
+.rvmrc
+localrc
