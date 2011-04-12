@@ -1,3 +1,6 @@
+" load pathogen
+call pathogen#runtime_append_all_bundles()
+
 set noswapfile
 
 " ----------------------------------------------------------------------------
@@ -22,7 +25,7 @@ set virtualedit=block      " allow virtual edit in visual block ..
 " ----------------------------------------------------------------------------
 
 " lead with ,
-let mapleader = ","
+let mapleader = "\\"
 
 " exit to normal mode with 'jj'
 inoremap jj <ESC>
@@ -71,7 +74,7 @@ set mat=5                  " duration to show matching brace (1/10 sec)
 set incsearch              " do incremental searching
 set laststatus=2           " always show the status line
 set ignorecase             " ignore case when searching
-set nohlsearch             " don't highlight searches
+"set nohlsearch             " don't highlight searches
 set visualbell             " shut the fuck up
 
 
