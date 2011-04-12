@@ -28,7 +28,7 @@ git_prompt_info () {
 }
 
 project_name () {
-  name=$(pwd | awk -F'Development/' '{print $2}' | awk -F/ '{print $1}')
+  name=$(pwd | awk -F'Projects/' '{print $2}' | awk -F/ '{print $1}')
   echo $name
 }
 
