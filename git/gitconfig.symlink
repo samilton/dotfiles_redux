@@ -1,0 +1,40 @@
+[user]
+	name = Sam Hamilton
+	email = samilton@gmail.com
+
+[core]
+  excludesfile = /Users/sam/.gitignore
+#  pager = "/opt/local/bin/less -RciqMSj5"
+#  editor = "mvim -f -c"
+
+[difftool "Kaleidoscope"]
+	cmd = ksdiff-wrapper git \"$LOCAL\" \"$REMOTE\"
+
+[difftool]
+	prompt = false
+
+[diff]
+	tool = Kaleidoscope
+  renames = true
+
+[color]
+  diff = auto
+  branch = auto
+  status = auto
+
+[alias]
+  st = status
+  d = diff
+  ci = commit -v
+  cia = commit -v -a
+  co = checkout
+  cp = cherry-pick
+  l = log
+  ll = log -p
+  lt = log trunk..
+  llt = log -p trunk..
+  lm = log master..
+  llm = log -p master..
+  b = branch
+
+
