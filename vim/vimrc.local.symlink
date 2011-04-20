@@ -1,0 +1,7 @@
+map leader = "\\"
+
+noremap <leader>s :w<CR>
+
+" map jj to <ESC>, <ESC> is a pain
+imap jj <Esc>
+noremap <leader><Space> :nohl<CR>
