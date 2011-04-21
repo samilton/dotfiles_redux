@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+
+/* remember the milk, yo! */
+
+http = require('http');
+
+var task = [];
+
+process.argv.forEach(function (val, index, array) {
+  if(index > 1) {
+    task.push(val);
+  }
+});
+
+t = task.join(" ");
+
+
+
