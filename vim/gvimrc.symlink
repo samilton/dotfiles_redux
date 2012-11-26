@@ -1,3 +1,7 @@
+colorscheme desert
+set anti
+set lines=999 columns=84
+set guioptions=egmrt
 
 if has("gui_macvim")
   " Fullscreen takes up entire screen

@@ -1,6 +1,5 @@
 .DS_Store
 .svn
-.tissues
 *~
 *.swp
 tags
@@ -14,3 +13,4 @@ id_rsa.pragma
 .bundle
 .rvmrc
 localrc
+*.rbc

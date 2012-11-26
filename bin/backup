@@ -18,7 +18,7 @@ backup_location="/Volumes/backup"
 
 # Directories to backup. Recursive, implied home (~) location.
 directories=(
-  Development
+  Code
   Documents
   "Library/Application Support/Adium 2.0"
   Movies
@@ -36,3 +36,4 @@ for directory in ${directories[@]}
 done
 
 hdiutil detach $backup_location
+diskutil eject fuckplanets

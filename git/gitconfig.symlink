@@ -1,17 +1,23 @@
 [user]
 	name = Sam Hamilton
-	email = samilton@gmail.com
+	email = shamilton@pragmatrading.com
+
+[apply]
+        whitespace = nowarn
+
+[help]
+        autocorrect = 1
 
 [core]
-  excludesfile = /Users/sam/.gitignore
-#  pager = "/opt/local/bin/less -RciqMSj5"
-#  editor = "mvim -f -c"
+        excludesfile = ~/.gitignore
+        editor       = "mvim -f -c 'au VimLeave * opendiff -a Terminal'"
+        autocrlf = input
 
 [difftool "Kaleidoscope"]
-	cmd = ksdiff-wrapper git \"$LOCAL\" \"$REMOTE\"
+        cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 
 [difftool]
-	prompt = false
+        prompt = false
 
 [diff]
 	tool = Kaleidoscope
@@ -21,6 +27,7 @@
   diff = auto
   branch = auto
   status = auto
+  ui = auto
 
 [alias]
   st = status
@@ -36,5 +43,23 @@
   lm = log master..
   llm = log -p master..
   b = branch
+  co = checkout
+  promote = !$ZSH/bin/git-promote
+  wtf     = !$ZSH/bin/git-wtf
+  rank-contributers = !$ZSH/bin/git-rank-contributers
+  count   = !git shortlog -sn
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --all
+  count = !git shortlog -sn
+  stage = add
 
+[credential]
+        helper = osxkeychain
 
+[hub]
+        protocol = https
+
+[color]
+        diff = auto
+        status = auto
+        branch = auto
+        ui = true
