@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+# encoding: UTF-8
+
+require 'tmpdir'
+
+@dir = "/tmp"
+
+def get_weather
+  `curl -s http://api.wunderground.com/api/30e919fe427e7a74/conditions/q/NY/New_York.json > /tmp/weather.json`
+end
+
+if (!File.exist? "/tmp/weather.json")
+  get_weather
+end
+
+if (Time.now.min % 5) == 0
+  get_weather
+end
+
+status=`cat #{@dir}/weather.json | jq '.current_observation.icon' | sed -e 's/\"//g'`
+
+case status
+when /cloudy/
+  puts "\u2601"
+when /rain/
+  puts "\u2602"
+when /snow/
+  puts "\u2744"
+else
+  puts "\u2600"
+end
+
