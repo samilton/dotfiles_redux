@@ -54,12 +54,21 @@ end
 now = Time.now.to_i
 last_modified = File.mtime("#{@dir}/weather.json").to_i
 
-@logger.info("DarkSky data last modified #{now - last_modified} seconds ago.")
+if(@debug)
+  @logger.info("DarkSky data last modified #{now - last_modified} seconds ago.")
+end
+
 if ((now - last_modified) > 600)
-  @logger.info("Time to update from DarkSky")
+  if(@debug)
+    @logger.info("Time to update from DarkSky")
+  end
+
   status = update_weather
 else
-  @logger.info("Using cache to display weather.")
+  if(@debug)
+    @logger.info("Using cache to display weather.")
+  end
+
   status = get_current_weather
 end
 
