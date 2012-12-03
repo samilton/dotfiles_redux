@@ -6,6 +6,7 @@ require 'uri'
 require 'net/http'
 require 'json'
 require 'yaml'
+require 'logger'
 
 @dir = "/tmp"
 
@@ -13,13 +14,23 @@ require 'yaml'
 # Simple Ruby script to query Dark Sky and return a nice unicode icon that goes into my
 # tmux status bar
 #
-# TODO: Support configurable DarkSky API key
 # TODO: Make cache location configurable (maybe this should go in Dropbox to minimize usage across all sessions)
 # TODO: Fairly niave code in that it assumes that dark sky is available...
 #
+
+config_file = File.join(ENV['HOME'], ".weather.yml")
+if(File.exist?(config_file))
+  @config = YAML::load(File.read(config_file))
+  @debug   = @config['debug']
+  @logger  = Logger.new(@config['log_file'])
+  @api_key = @config['api_key']
+else
+  puts "Unable to load configuration. Please setup ~/.weather.yml as specified in the README."
+end
+
 def update_weather
 	gps_coordinates = `~/bin/WhereIsMyLaptop`
-  uri = URI("https://api.darkskyapp.com/v1/forecast/6f67538cf335740b8718911c12780a4f/#{gps_coordinates}")
+  uri = URI("https://api.darkskyapp.com/v1/forecast/#{@api_key}/#{gps_coordinates}")
   Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
     request = Net::HTTP::Get.new uri.request_uri
 
@@ -40,9 +51,15 @@ def get_current_weather
   end
 end
 
-if (Time.now.min % 10) == 0
+now = Time.now.to_i
+last_modified = File.mtime("#{@dir}/weather.json").to_i
+
+@logger.info("DarkSky data last modified #{now - last_modified} seconds ago.")
+if ((now - last_modified) > 600)
+  @logger.info("Time to update from DarkSky")
   status = update_weather
 else
+  @logger.info("Using cache to display weather.")
   status = get_current_weather
 end
 
