@@ -2,23 +2,49 @@
 
 # encoding: UTF-8
 
-require 'tmpdir'
+require 'uri'
+require 'net/http'
+require 'json'
+require 'yaml'
 
 @dir = "/tmp"
 
-def get_weather
-  `curl -s http://api.wunderground.com/api/30e919fe427e7a74/conditions/q/NY/New_York.json > /tmp/weather.json`
+#
+# Simple Ruby script to query Dark Sky and return a nice unicode icon that goes into my
+# tmux status bar
+#
+# TODO: Support configurable DarkSky API key
+# TODO: Make cache location configurable (maybe this should go in Dropbox to minimize usage across all sessions)
+# TODO: Fairly niave code in that it assumes that dark sky is available...
+#
+def update_weather
+	gps_coordinates = `~/bin/WhereIsMyLaptop`
+  uri = URI("https://api.darkskyapp.com/v1/forecast/6f67538cf335740b8718911c12780a4f/#{gps_coordinates}")
+  Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+    request = Net::HTTP::Get.new uri.request_uri
+
+    response = http.request request
+    File.open("/#{@dir}/weather.json", 'w') {|f| f.write(response.body) }
+
+    status = JSON.load(response.body)
+  	return status["currentSummary"]
+  end
 end
 
-if (!File.exist? "/tmp/weather.json")
-  get_weather
+def get_current_weather
+  if (File.exist? "/#{@dir}/weather.json")
+    status = JSON.load(File.open("#{@dir}/weather.json"))
+    return status["currentSummary"]
+  else
+    return "rain"
+  end
 end
 
-if (Time.now.min % 5) == 0
-  get_weather
+if (Time.now.min % 10) == 0
+  status = update_weather
+else
+  status = get_current_weather
 end
-
-status=`cat #{@dir}/weather.json | jq '.current_observation.icon' | sed -e 's/\"//g'`
 
 case status
 when /cloudy/
@@ -27,6 +53,8 @@ when /rain/
   puts "\u2602"
 when /snow/
   puts "\u2744"
+when "!"
+  puts "!" # Signifies a problem getting to the cache or dark sky
 else
   puts "\u2600"
 end
