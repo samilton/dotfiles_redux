@@ -1,0 +1,9 @@
+#!/usr/bin/ruby
+
+x=true
+while true do
+  system("clear")
+  puts "#{Time.now.strftime("%H:%M:%S").ljust(15)}"
+  system("git lg -10")
+  sleep 2
+end

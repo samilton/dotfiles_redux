@@ -52,7 +52,11 @@ def get_current_weather
 end
 
 now = Time.now.to_i
-last_modified = File.mtime("#{@dir}/weather.json").to_i
+if File.exist? File.join(@dir, "weather.json")
+  last_modified = File.mtime("#{@dir}/weather.json").to_i 
+else
+  last_modified = 0
+end
 
 if(@debug)
   @logger.info("DarkSky data last modified #{now - last_modified} seconds ago.")

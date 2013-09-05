@@ -18,5 +18,14 @@ fi
 autoload -U compinit
 compinit
 
+eval "$(rbenv init -)"
+
 # load every completion after autocomplete loads
 for config_file ($ZSH/**/completion.zsh) source $config_file
+
+eval "$(rbenv init -)"
+
+export PATH=/Applications/Vagrant/bin:$PATH
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"

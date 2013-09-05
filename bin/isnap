@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "Taking $1 snapshots"
+while $x < $1 do
+	imagesnap ~/Desktop/`date +%y%m%d%H%M%S`.png > /dev/null 2>&1
+	sleep ${1-1}
+	let x=x+1
+done
