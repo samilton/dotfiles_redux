@@ -10,7 +10,7 @@
 
 [core]
 	excludesfile = /Users/shamilton/.gitignore
-        editor       = "mvim -f -c 'au VimLeave * opendiff -a Terminal'"
+        #editor       = "mvim -f -c 'au VimLeave * opendiff -a Terminal'"
         autocrlf = input
 
 [difftool "Kaleidoscope"]
@@ -51,6 +51,14 @@
 	lg                = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --all
   count             = !git shortlog -sn
   stage             = add
+	switch = !legit switch \"$@\"
+	branches = !legit branches
+	sprout = !legit sprout \"$@\"
+	unpublish = !legit unpublish \"$@\"
+	harvest = !legit harvest \"$@\"
+	sync = !legit sync \"$@\"
+	publish = !legit publish \"$@\"
+	graft = !legit graft \"$@\"
 
 [credential]
         helper = osxkeychain

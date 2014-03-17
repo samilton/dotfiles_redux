@@ -1,4 +1,6 @@
 # shortcut to this dotfiles path is $ZSH
+export PATH="$HOME/.rbenv/bin:$PATH"
+
 export ZSH=$HOME/.dotfiles
 
 # your project folder that we can `c [tab]` to

@@ -2,6 +2,8 @@ colorscheme Tomorrow-Night
 set anti
 set lines=999 columns=84
 set guioptions=egmrt
+set wrap linebreak nolist
+
 
 if has("gui_macvim")
   " Fullscreen takes up entire screen
@@ -55,7 +57,7 @@ endif
 set guioptions-=T
 
 " Default gui color scheme
-color railscasts
+color solarized
 
 " ConqueTerm wrapper
 function StartTerm()
