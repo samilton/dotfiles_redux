@@ -1,0 +1,8 @@
+# credit: http://nparikh.org/notes/zshrc.txt
+# Usage: smartextract <file>
+# Description: extracts archived files / mounts disk images
+# Note: .dmg/hdiutil is Mac OS X-specific.
+sman () {
+  open dash://manpages:$1
+}
+

@@ -1,0 +1,10 @@
+# credit: http://nparikh.org/notes/zshrc.txt
+# Usage: smartextract <file>
+# Description: extracts archived files / mounts disk images
+# Note: .dmg/hdiutil is Mac OS X-specific.
+q () {
+  host=$(curl -H "Accept: application/json" http://pmt.pragmafs.com/instances/where/$1 | jq '.fqdn')
+  h=$(print -r ${(Q)host})
+  ssh ${h}
+}
+
