@@ -5,3 +5,24 @@ noremap <leader>s :w<CR>
 " map jj to <ESC>, <ESC> is a pain
 imap jj <Esc>
 noremap <leader><Space> :nohl<CR>
+
+function! <SID>StripTrailingWhitespaces()
+    " Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " Do the business:
+    %s/\s\+$//e
+    " Clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+endfunction
+
+function! <SID>EditConfig()
+  tabnew
+  o ~/.vimrc.local
+  split ~/.gvimrc.local
+endfunction
+
+nnoremap <silent> <leader>W :call <SID>StripTrailingWhitespaces()<CR>
+nnoremap <silent> <leader>oo :call <SID>EditConfig()<CR>

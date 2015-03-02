@@ -1,0 +1,3 @@
+#compdef v
+
+_files -W ~/Projects/cfgsvn/DC2/te -/

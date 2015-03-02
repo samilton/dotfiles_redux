@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'time'
+
+race_day = Time.parse("Sep 28, 2015")
+today = Time.now
+
+weeks_to_race = (race_day - today) / 86400 / 7
+
+puts weeks_to_race.floor

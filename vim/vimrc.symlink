@@ -1,208 +1,120 @@
+set nocompatible
+filetype off
 
-if has("gui_macvim")
-  " Fullscreen takes up entire screen
-  set fuoptions=maxhorz,maxvert
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
 
-  " Command-T for CommandT
-  macmenu &File.New\ Tab key=<D-T>
-  map <D-t> :CommandT<CR>
-  imap <D-t> <Esc>:CommandT<CR>
+" Let Vundle manage Vundle
+Bundle 'gmarik/vundle'
 
-  " Command-Return for fullscreen
-  macmenu Window.Toggle\ Full\ Screen\ Mode key=<D-CR>
+" My Bundles
+Bundle 'tpope/vim-sensible'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-rails'
+Bundle 'tpope/vim-rake'
+Bundle 'nanotech/jellybeans.vim'
+Bundle 'Lokaltog/vim-powerline'
+Bundle 'scrooloose/syntastic'
+Bundle 'scrooloose/nerdtree'
+Bundle 'kien/ctrlp.vim'
+Bundle 'rking/ag.vim'
+Bundle 'kana/vim-textobj-user'
+Bundle 'nelstrom/vim-textobj-rubyblock'
+Bundle 'slim-template/vim-slim'
+Bundle 'chriskempson/vim-tomorrow-theme'
 
-  " Command-Shift-F for Ack
-  map <D-F> :Ack<space>
+filetype plugin indent on
 
-  " Command-e for ConqueTerm
-  map <D-e> :call StartTerm()<CR>
+let mapleader="\\"
 
-  " Command-/ to toggle comments
-  map <D-/> <plug>NERDCommenterToggle<CR>
+color Tomorrow-Night
 
-  " Command-][ to increase/decrease indentation
-  vmap <D-]> >gv
-  vmap <D-[> <gv
+" set cursorline
+set expandtab
+set modelines=0
+set shiftwidth=2
+set clipboard=unnamed
+set synmaxcol=128
+set ttyscroll=10
+set encoding=utf-8
+set tabstop=2
+set nowrap
+set number
+set expandtab
+set nowritebackup
+set noswapfile
+set nobackup
+set hlsearch
+set ignorecase
+set smartcase
 
-  " Map Command-# to switch tabs
-  map  <D-0> 0gt
-  imap <D-0> <Esc>0gt
-  map  <D-1> 1gt
-  imap <D-1> <Esc>1gt
-  map  <D-2> 2gt
-  imap <D-2> <Esc>2gt
-  map  <D-3> 3gt
-  imap <D-3> <Esc>3gt
-  map  <D-4> 4gt
-  imap <D-4> <Esc>4gt
-  map  <D-5> 5gt
-  imap <D-5> <Esc>5gt
-  map  <D-6> 6gt
-  imap <D-6> <Esc>6gt
-  map  <D-7> 7gt
-  imap <D-7> <Esc>7gt
-  map  <D-8> 8gt
-  imap <D-8> <Esc>8gt
-  map  <D-9> 9gt
-  imap <D-9> <Esc>9gt
+" Automatic formatting
+autocmd BufWritePre *.rb :%s/\s\+$//e
+autocmd BufWritePre *.go :%s/\s\+$//e
+autocmd BufWritePre *.haml :%s/\s\+$//e
+autocmd BufWritePre *.html :%s/\s\+$//e
+autocmd BufWritePre *.scss :%s/\s\+$//e
+autocmd BufWritePre *.slim :%s/\s\+$//e
+autocmd BufWritePre *.xml  :%s/\s\+$//e
+
+au BufNewFile * set noeol
+au BufRead,BufNewFile *.go set filetype=go
+
+" No show command
+autocmd VimEnter * set nosc
+
+" Quick ESC
+" imap jj <ESC>
+
+" Jump to the next row on long lines
+map <Down> gj
+map <Up>   gk
+nnoremap j gj
+nnoremap k gk
+
+" format the entire file
+nmap <leader>fef ggVG=
+
+" Open new buffers
+nmap <leader>s<left>   :leftabove  vnew<cr>
+nmap <leader>s<right>  :rightbelow vnew<cr>
+nmap <leader>s<up>     :leftabove  new<cr>
+nmap <leader>s<down>   :rightbelow new<cr>
+
+" Tab between buffers
+noremap <tab> <c-w><c-w>
+
+" Switch between last two buffers
+nnoremap <leader><leader> <C-^>
+
+" Resize buffers
+if bufwinnr(1)
+  nmap Ä <C-W><<C-W><
+  nmap Ö <C-W>><C-W>>
+  nmap ö <C-W>-<C-W>-
+  nmap ä <C-W>+<C-W>+
 endif
 
-" Start without the toolbar
-set guioptions-=T
+" NERDTree
+nmap <leader>n :NERDTreeToggle<CR>
+let NERDTreeHighlightCursorline=1
+let NERDTreeIgnore = ['tmp', '.yardoc', 'pkg']
 
-" Default gui color scheme
-color railscasts
+" Syntastic
+let g:syntastic_mode_map = { 'mode': 'passive' }
+let g:syntastic_ruby_exec = '~/.rvm/rubies/ruby-2.0.0-p0/bin/ruby'
 
-set background=dark
+" CtrlP
+nnoremap <silent> t :CtrlP<cr>
+let g:ctrlp_working_path_mode = 2
+let g:ctrlp_by_filename = 1
+let g:ctrlp_max_files = 600
+let g:ctrlp_max_depth = 5
 
-" ConqueTerm wrapper
-function StartTerm()
-  execute 'ConqueTerm ' . $SHELL . ' --login'
-  setlocal listchars=tab:\ \ 
-endfunction
+" Go programming
+set rtp+=/usr/local/Cellar/go/1.0.3/misc/vim
 
-" Project Tree
-autocmd VimEnter * call s:CdIfDirectory(expand("<amatch>"))
-autocmd FocusGained * call s:UpdateNERDTree()
-autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
+" Quit with :Q
+command -nargs=0 Quit :qa!
 
-" Close all open buffers on entering a window if the only
-" buffer that's left is the NERDTree buffer
-function s:CloseIfOnlyNerdTreeLeft()
-  if exists("t:NERDTreeBufName")
-    if bufwinnr(t:NERDTreeBufName) != -1
-      if winnr("$") == 1
-        q
-      endif
-    endif
-  endif
-endfunction
-
-" If the parameter is a directory, cd into it
-function s:CdIfDirectory(directory)
-  let explicitDirectory = isdirectory(a:directory)
-  let directory = explicitDirectory || empty(a:directory)
-
-  if explicitDirectory
-    exe "cd " . fnameescape(a:directory)
-  endif
-
-  if directory
-    NERDTree
-    wincmd p
-    bd
-  endif
-
-  if explicitDirectory
-    wincmd p
-  endif
-endfunction
-
-" NERDTree utility function
-function s:UpdateNERDTree(...)
-  let stay = 0
-
-  if(exists("a:1"))
-    let stay = a:1
-  end
-
-  if exists("t:NERDTreeBufName")
-    let nr = bufwinnr(t:NERDTreeBufName)
-    if nr != -1
-      exe nr . "wincmd w"
-      exe substitute(mapcheck("R"), "<CR>", "", "")
-      if !stay
-        wincmd p
-      end
-    endif
-  endif
-
-  if exists(":CommandTFlush") == 2
-    CommandTFlush
-  endif
-endfunction
-
-" Utility functions to create file commands
-function s:CommandCabbr(abbreviation, expansion)
-  execute 'cabbrev ' . a:abbreviation . ' <c-r>=getcmdpos() == 1 && getcmdtype() == ":" ? "' . a:expansion . '" : "' . a:abbreviation . '"<CR>'
-endfunction
-
-function s:FileCommand(name, ...)
-  if exists("a:1")
-    let funcname = a:1
-  else
-    let funcname = a:name
-  endif
-
-  execute 'command -nargs=1 -complete=file ' . a:name . ' :call ' . funcname . '(<f-args>)'
-endfunction
-
-function s:DefineCommand(name, destination)
-  call s:FileCommand(a:destination)
-  call s:CommandCabbr(a:name, a:destination)
-endfunction
-
-" Public NERDTree-aware versions of builtin functions
-function ChangeDirectory(dir, ...)
-  execute "cd " . fnameescape(a:dir)
-  let stay = exists("a:1") ? a:1 : 1
-
-  NERDTree
-
-  if !stay
-    wincmd p
-  endif
-endfunction
-
-function Touch(file)
-  execute "!touch " . shellescape(a:file, 1)
-  call s:UpdateNERDTree()
-endfunction
-
-function Remove(file)
-  let current_path = expand("%")
-  let removed_path = fnamemodify(a:file, ":p")
-
-  if (current_path == removed_path) && (getbufvar("%", "&modified"))
-    echo "You are trying to remove the file you are editing. Please close the buffer first."
-  else
-    execute "!rm " . shellescape(a:file, 1)
-  endif
-
-  call s:UpdateNERDTree()
-endfunction
-
-function Mkdir(file)
-  execute "!mkdir " . shellescape(a:file, 1)
-  call s:UpdateNERDTree()
-endfunction
-
-function Edit(file)
-  if exists("b:NERDTreeRoot")
-    wincmd p
-  endif
-
-  execute "e " . fnameescape(a:file)
-
-ruby << RUBY
-  destination = File.expand_path(VIM.evaluate(%{system("dirname " . shellescape(a:file, 1))}))
-  pwd         = File.expand_path(Dir.pwd)
-  home        = pwd == File.expand_path("~")
-
-  if home || Regexp.new("^" + Regexp.escape(pwd)) !~ destination
-    VIM.command(%{call ChangeDirectory(fnamemodify(a:file, ":h"), 0)})
-  end
-RUBY
-endfunction
-
-" Define the NERDTree-aware aliases
-call s:DefineCommand("cd", "ChangeDirectory")
-call s:DefineCommand("touch", "Touch")
-call s:DefineCommand("rm", "Remove")
-call s:DefineCommand("e", "Edit")
-call s:DefineCommand("mkdir", "Mkdir")
-
-" Include user's local vim config
-if filereadable(expand("~/.gvimrc.local"))
-  source ~/.gvimrc.local
-endif

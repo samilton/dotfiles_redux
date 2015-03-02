@@ -1,3 +1,12 @@
+map leader = "\\"
+set hlsearch
+
+noremap <leader>s :w<CR>
+
+" map jj to <ESC>, <ESC> is a pain
+imap jj <Esc>
+nnoremap <silent> <leader><space> :nohlsearch<CR>
+
 function! <SID>StripTrailingWhitespaces()
     " Preparation: save last search, and cursor position.
     let _s=@/
@@ -18,3 +27,4 @@ endfunction
 
 nnoremap <silent> <leader>W :call <SID>StripTrailingWhitespaces()<CR>
 nnoremap <silent> <leader>oo :call <SID>EditConfig()<CR>
+

@@ -5,6 +5,10 @@
 q () {
   host=$(curl -H "Accept: application/json" http://pmt.pragmafs.com/instances/where/$1 | jq '.fqdn')
   h=$(print -r ${(Q)host})
-  ssh ${h}
+#  if hash mosh 2> /dev/null; then
+#    mosh ${h}
+#  else
+	  ssh ${h} $2
+#  fi
 }
 
