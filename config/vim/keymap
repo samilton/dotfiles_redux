@@ -1,0 +1,7 @@
+""""""""
+" Misc Key maps
+""""""""
+
+imap jj <esc>
+map <leader>n :NERDTreeToggle<enter>
+

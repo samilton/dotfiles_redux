@@ -1,1 +1,0 @@
-<html><body>You are being <a href="https://github.com/mustache/mustache/raw/master/contrib/mustache.vim">redirected</a>.</body></html>
