@@ -1,0 +1,81 @@
+#/bin/bash
+
+binaries=(
+	ack
+	apple-gcc42
+	autoconf
+	automake
+	bison
+	cmake
+	coreutils
+	cscope
+	faac
+	ffmpeg
+	findutils
+	fish
+	freetype
+	gdbm
+	gettext
+	git
+	gmp
+	go
+	gradle
+	graphicsmagick
+	grep
+	hub
+	jpeg
+	jq
+	libevent
+	libpng
+	libtool
+	libvo-aacenc
+	makedepend
+	maven
+	md5sha1sum
+	mobile-shell
+	mysql
+	node
+	openssl
+	ossp-uuid
+	pandoc
+	pcre
+	pkg-config
+	postgresql
+	protobuf 
+	python
+	rbenv
+	rbenv-bundler
+	rbenv-gemset
+	readline
+	redis
+	rename
+	ruby-build
+	rust
+	sbt
+	scala
+	sqlite
+	ssh-copy-id
+	sshfs
+	task
+	texi2html
+	tmux
+	trash
+	tree
+	v8
+	watch
+	webkit2png
+	wget
+	x264
+	xvid
+	xz
+	yasm
+	z
+	zookeeper
+	zopfli
+	zsh
+)
+
+echo "installing binaries..."
+brew install ${binaries[@]}
+
+
